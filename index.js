@@ -13,6 +13,7 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
+console.log(process.env.DATABASE_URL);
 const corsOptions = {
   origin: "https://spin-wheel-sigma.vercel.app",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",

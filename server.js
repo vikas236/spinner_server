@@ -14,7 +14,7 @@ const pool = new Pool({
 });
 
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: "https://spin-wheel-sigma.vercel.app",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   allowedHeaders: "Content-Type,Authorization",
 };

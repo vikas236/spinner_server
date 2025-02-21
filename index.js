@@ -13,7 +13,6 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
-console.log(process.env.DATABASE_URL);
 const corsOptions = {
   origin: "https://spin-wheel-sigma.vercel.app",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -58,6 +57,24 @@ app.post("/add_user", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("Error adding user");
+  }
+});
+
+app.post("/check_user", async (req, res) => {
+  const { fingerprint, uid } = req.body;
+  try {
+    const existingUser = await pool.query(
+      "SELECT * FROM amcspin_users WHERE fingerprint = $1 OR uid = $2",
+      [fingerprint, uid]
+    );
+    if (existingUser.rows.length > 0) {
+      res.json({ exists: true, user: existingUser.rows[0] });
+    } else {
+      res.json({ exists: false });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error checking user");
   }
 });
 
